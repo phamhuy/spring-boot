@@ -2,10 +2,14 @@ package com.phamhuy.example1.user;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Size;
+
 @SuppressWarnings("serial")
 public class User implements Serializable {
 	private long id;
 	private String username;
+
+	@Size(max = 5, message = "first name length must be less than or equal to 5")
 	private String firstName;
 	private String lastName;
 	private static long totalIds = 0;

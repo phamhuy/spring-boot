@@ -2,8 +2,10 @@ package com.phamhuy.example1.exceptions;
 
 import com.phamhuy.example1.user.UserNotFoundException;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,5 +26,12 @@ public class Example1ResponseEntityExceptionHandler extends ResponseEntityExcept
   public final ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex, WebRequest request) {
     ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getMessage(), request.getDescription(false));
     return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+  }
+
+  @Override
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
+      HttpStatus status, WebRequest request) {
+      ExceptionResponse exceptionResponse = new ExceptionResponse("Invalid Input", ex.getBindingResult().toString());
+      return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
   }
 }
