@@ -12,6 +12,7 @@
 .mvn
 mvnw
 mvnw.cmd
+.vscode
 
 ### IntelliJ IDEA ###
 .idea
