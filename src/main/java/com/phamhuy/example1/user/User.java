@@ -2,26 +2,35 @@ package com.phamhuy.example1.user;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
+
 @SuppressWarnings("serial")
+@Entity
 public class User implements Serializable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String username;
 
 	@Size(max = 5, message = "first name length must be less than or equal to 5")
 	private String firstName;
 	private String lastName;
-	private static long totalIds = 0;
+
+	protected User() {
+
+	}
 
 	public User(String firstName, String lastName) {
-		id = ++User.totalIds;
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
 
 	public User(User src) {
-		id = ++User.totalIds;
 		firstName = src.firstName;
 		lastName = src.lastName;
 	}
