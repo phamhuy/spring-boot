@@ -28,22 +28,27 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/users/{userId}")
-	public User getUser(@PathVariable("userId") long userId) {
-		User user = userService.getUser(userId);
-		if (user == null) {
-			throw new UserNotFoundException(String.format("Unable to find user with id %d.", userId));
-		}
-
-		return user;
+	public User getUser(@PathVariable("userId") int userId) {
+		return userService.getUser(userId);
 	}
 
 	@PostMapping(path = "/users")
-	public long createUser(@Valid @RequestBody User user) {
+	public int createUser(@Valid @RequestBody User user) {
 		return userService.createUser(user);
 	}
 
 	@GetMapping(path = "/hello-world")
 	public String helloWorld() {
 		return messageSource.getMessage("good.morning.message", null, LocaleContextHolder.getLocale());
+	}
+
+	@GetMapping(path = "/users/{userId}/posts")
+	public List<Post> getPosts(@PathVariable int userId) {
+		return userService.getPosts(userId);
+	}
+
+	@PostMapping(path = "/users/{userId}/posts")
+	public int createPost(@PathVariable int userId, @RequestBody Post post) {
+		return userService.createPost(userId, post);
 	}
 }

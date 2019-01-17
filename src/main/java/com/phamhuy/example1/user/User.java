@@ -1,11 +1,13 @@
 package com.phamhuy.example1.user;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
 
@@ -14,12 +16,15 @@ import javax.validation.constraints.Size;
 public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int id;
 	private String username;
 
 	@Size(max = 5, message = "first name length must be less than or equal to 5")
 	private String firstName;
 	private String lastName;
+
+	@OneToMany(mappedBy="user")
+	private List<Post> posts;
 
 	protected User() {
 
@@ -35,11 +40,11 @@ public class User implements Serializable {
 		lastName = src.lastName;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -65,5 +70,13 @@ public class User implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 }
